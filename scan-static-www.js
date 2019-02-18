@@ -1,9 +1,12 @@
-const { lstatSync, readdirSync, existsSync } = require('fs')
+const { statSync, lstatSync, readdirSync, existsSync } = require('fs')
 const path = require('path')
+const Filehound = require('filehound')
 
 const isDirectory = source => lstatSync(source).isDirectory()
-const getDirectories = source =>
-  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
+// const getDirectories = source =>
+//   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
+
+const getDirectories = (source) => Filehound.create().path(source).directory().findSync()
 
 let _scan = function(queryPath, resolve, reject) {
     try {
@@ -11,6 +14,8 @@ let _scan = function(queryPath, resolve, reject) {
         console.log(`__dirname : ${__dirname}`)
         let dirs = getDirectories(queryPath)
         let outputs = []
+
+        console.log(dirs);
 
         dirs.forEach(dir => {
             let _path = path.resolve(__dirname, dir)
