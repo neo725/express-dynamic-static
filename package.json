@@ -11,7 +11,8 @@
     "filehound": "^1.17.0",
     "node-port-check": "^2.0.1",
     "node-stopwatch": "0.0.1",
-    "ps-node": "^0.1.6"
+    "ps-node": "^0.1.6",
+    "psaux": "^0.3.0"
   },
   "devDependencies": {},
   "scripts": {
