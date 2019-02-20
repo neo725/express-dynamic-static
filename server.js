@@ -2,9 +2,8 @@
 
 require('colors')
 
-let ps = require('ps-node')
-let Psaux = require('psaux'),
-    psaux = Psaux()
+const ps = require('ps-node')
+const psaux = require('psaux')
 
 try {
 
@@ -24,10 +23,10 @@ try {
     //         }
     //     })
     // })
-    psaux.parsed(function (err, res) {
-        if (err) return console.error(err);
-        
-        console.log(res);
+    psaux().then(list => {
+        list.forEach(ps => {
+            console.log(ps.user, ps.pid, ps.cpu, ps.mem);
+        });
     })
 
 } catch (ex) {
