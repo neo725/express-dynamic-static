@@ -9,7 +9,8 @@
     "express": "^4.16.4",
     "express-dynamic-static": "^1.0.5",
     "filehound": "^1.17.0",
-    "node-port-check": "^2.0.1"
+    "node-port-check": "^2.0.1",
+    "node-stopwatch": "0.0.1"
   },
   "devDependencies": {},
   "scripts": {
