@@ -7,7 +7,7 @@ const isDirectory = source => lstatSync(source).isDirectory()
 // const getDirectories = source =>
 //   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
 
-const getDirectories = (source) => Filehound.create().path(source).directory().depth(0).findSync()
+const getDirectories = (source) => Filehound.create().path(source).directory().depth(1).findSync()
 
 let _scan = function(queryPath, resolve, reject) {
     try {
@@ -31,19 +31,11 @@ let _scan = function(queryPath, resolve, reject) {
             //console.log(`_path : ${_path}`)
             let currentPath = path.join(_path, 'www')
 
-            console.log(`Current Path : ${currentPath}`)
+            console.log(`current Path : ${currentPath}`)
 
             //if (existsSync(currentPath)) { // this is for file check, not directory
             if (existsSync(currentPath) && isDirectory(currentPath)) {
-                // current location is under user's www folder
-                // // check is there has a www file in sub directory
-                // let folder_array = dir.split('\\')
-                // let folder = folder_array[folder_array.length - 1]
-
-                // // outputs.push({
-                // //     name: folder,
-                // //     path: _path
-                // // })
+                
                 // get sub directives
                 console.log(`look into ${currentPath} (its a exists directory)`)
 
@@ -64,16 +56,13 @@ let _scan = function(queryPath, resolve, reject) {
                 })
 
                 if (defaultExists) {
-                    // outputs.push({
-                        
-                    // })
-                    console.log(`defaultExists !`)
+                    outputs.push({
+                        name: path.basename(_path),
+                        path: currentPath
+                    })
                 }
             }
         })
-
-        //console.log(dirs)
-
         resolve(outputs)
     }
     catch (ex) {
