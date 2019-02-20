@@ -21,12 +21,15 @@ let _scan = function (queryPath, resolve, reject) {
         console.log(`__dirname (current path) : ${__dirname}`)
 
         let searchDirectories = (_queryPath, level, currentLevel) => {
-            if (currentLevel >= level) return
 
             console.log(`_queryPath : ${_queryPath}`)
 
             console.log(`level : ${level}`)
             console.log(`currentLevel : ${currentLevel}`)
+
+            if (currentLevel >= level) return
+
+            console.log(`prepare to search : ${_queryPath}...`)
 
             var stopwatch = Stopwatch.create()
             stopwatch.start()
@@ -76,6 +79,8 @@ let _scan = function (queryPath, resolve, reject) {
 
                         return
                     }
+
+                    console.log(`defaultExists : ${defaultExists}`)
 
                     // search 1st level child folder
                     searchDirectories(currentPath, level, ++currentLevel)
