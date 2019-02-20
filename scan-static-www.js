@@ -21,6 +21,7 @@ let _scan = function(queryPath, resolve, reject) {
 
         stopwatch.stop()
 
+        console.log(`return dirs.length : ${dirs.length}`)
         console.log(`getDirectories : ${stopwatch.elapsedMilliseconds} ms`)
 
         return
