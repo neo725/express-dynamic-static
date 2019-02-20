@@ -46,6 +46,8 @@ let _scan = function (queryPath, resolve, reject) {
                 //console.log(`_path : ${_path}`)
                 let currentPath = path.join(_path, 'www')
 
+                if (currentLevel > 0) currentPath = _path
+
                 console.log(`current Path : ${currentPath}`)
 
                 //if (existsSync(currentPath)) { // this is for file check, not directory
