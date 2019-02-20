@@ -2,7 +2,7 @@
 
 require('colors')
 
-module.exports = () => {
+let _run = () => {
     let config = require('./config'),
         www = require('./scan-static-www')
 
@@ -59,4 +59,8 @@ module.exports = () => {
     } catch (ex) {
         console.log(ex)
     }
+}
+
+module.exports = {
+    'run': _run
 }
