@@ -7,7 +7,7 @@ const isDirectory = source => lstatSync(source).isDirectory()
 // const getDirectories = source =>
 //   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
 
-const getDirectories = (source) => Filehound.create().path(source).directory().depth(2).findSync()
+const getDirectories = (source) => Filehound.create().path(source).directory().depth(1).findSync()
 
 let _scan = function(queryPath, resolve, reject) {
     try {
@@ -23,8 +23,6 @@ let _scan = function(queryPath, resolve, reject) {
 
         console.log(`return dirs.length : ${dirs.length}`)
         console.log(`getDirectories : ${stopwatch.elapsedMilliseconds} ms`)
-
-        return
 
         let outputs = []
 
