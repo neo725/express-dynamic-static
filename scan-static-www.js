@@ -4,10 +4,10 @@ const Filehound = require('filehound')
 const Stopwatch = require("node-stopwatch").Stopwatch
 
 const isDirectory = source => lstatSync(source).isDirectory()
-const getDirectories = source =>
-  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
+// const getDirectories = source =>
+//   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
 
-// const getDirectories = (source) => Filehound.create().path(source).directory().findSync()
+const getDirectories = (source) => Filehound.create().path(source).directory().depth(2).findSync()
 
 let _scan = function(queryPath, resolve, reject) {
     try {
