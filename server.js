@@ -16,11 +16,7 @@ const max_try_times = 3
 
 try {
 
-    let pscheck = (callback, run_times) => {
-        if (run_times >= max_try_times) {
-            console.log('error, exceed max retry times !')
-            return
-        }
+    let pscheck = (try_times) => {
 
         console.log('prepare to run psaux...')
 
@@ -45,38 +41,26 @@ try {
                         return
                     }
 
-                    console.log('port check failed !')
+                    console.log('port check failed (80 should be used, but its available now) !')
+                    console.log(`try_times : ${try_times}`)
+
+                    runPsCheck(try_times + 1)
                 })
             } else {
-                if (callback) {
-                    callback(run_times + 1)
-                } else {
-                    console.log('psaux check failed and callback not passed in !')
-                }
+                runPsCheck(try_times + 1)
             }
         })
     }
 
-    let runNginxCheck = (run_times) => {
+    let runPsCheck = (run_times) => {
         if (!run_times || isNaN(run_times)) run_times = 0
 
-        exec('nginx', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-
-            setTimeout(() => {
-                pscheck(runNginxCheck)
-            }, 1000)
-        })
+        setTimeout(() => {
+            pscheck(run_times + 1)
+        }, 1000)
     }
 
-    runNginxCheck()
-
+    runPsCheck()
 
 } catch (ex) {
     console.log(ex)
