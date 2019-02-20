@@ -83,7 +83,7 @@ let _scan = function (queryPath, resolve, reject) {
                     console.log(`defaultExists : ${defaultExists}`)
 
                     // search 1st level child folder
-                    searchDirectories(currentPath, level, ++currentLevel)
+                    searchDirectories(currentPath, level, currentLevel + 1)
                 }
             })
         }
