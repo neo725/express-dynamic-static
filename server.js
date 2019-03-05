@@ -18,7 +18,7 @@ try {
 
     let pscheck = (try_times) => {
 
-        console.log('prepare to run psaux...')
+        console.log(`prepare to run psaux...${try_times}`)
 
         psaux().then(list => {
             let check_by_ps = false; // check with psaux
