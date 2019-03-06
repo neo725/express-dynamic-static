@@ -27,7 +27,10 @@ let _scan = function (queryPath, resolve, reject) {
             console.log(`level : ${level}`)
             console.log(`currentLevel : ${currentLevel}`)
 
-            if (currentLevel >= level) return
+            if (currentLevel >= level) {
+                console.log(`the currentLevel(${currentLevel}) is out off deep level in search define, stop searching...`)
+                return
+            }
 
             console.log(`prepare to search : ${_queryPath}...`)
 
@@ -60,7 +63,7 @@ let _scan = function (queryPath, resolve, reject) {
 
                     // check is root has default-pages that defined in config.js
                     // >> /thchang/www
-                    let _config = require('./config')
+                    let _config = require('./config')[process.env.NODE_ENV]
                     let defaultPages = _config['default-pages'] || []
 
                     let defaultExists = false
@@ -79,6 +82,8 @@ let _scan = function (queryPath, resolve, reject) {
                             path: currentPath
                         })
 
+                        console.log(`default-pages finded in '${_path}', stop searching in deeper.`)
+
                         return
                     }
 
@@ -90,7 +95,7 @@ let _scan = function (queryPath, resolve, reject) {
             })
         }
 
-        searchDirectories(queryPath, 2, 0)
+        searchDirectories(queryPath, 3, 0) // 2 is the max level deep in search
 
         resolve(outputs)
     } catch (ex) {

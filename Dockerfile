@@ -1,4 +1,7 @@
-FROM node:10.15-alpine
+FROM node:10-alpine
+
+#RUN apt-get update && \
+#	apt-get -y install sudo
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
@@ -10,8 +13,14 @@ USER node
 
 RUN npm install
 
-COPY --chown=node:node . .
+COPY . .
+
+USER root
+
+RUN chown -R node:node .
 
 EXPOSE 8010
 
-CMD ["node", "server.js"]
+#CMD ["node", "server.js"]
+
+CMD ["npm", "start"]

@@ -3,7 +3,9 @@
 require('colors')
 
 let _run = () => {
-    let config = require('./config'),
+    console.log(`NODE_ENV : ${process.env.NODE_ENV}`)
+    
+    let config = require('./config')[process.env.NODE_ENV],
         www = require('./scan-static-www')
 
     let express = require('express'),
