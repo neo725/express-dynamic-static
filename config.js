@@ -1,7 +1,9 @@
-module.exports = {
+var _config = {
     'development': {
-        'path': './fake_folders',
+        'host': 'http://localhost',
+        'path': './fake_users',
         'port': 8010,
+        'search-level': 3,
         'default-pages': [
             'index.html',
             'index.htm',
@@ -10,8 +12,10 @@ module.exports = {
         ]
     },
     'production': {
+        'host': 'http://edls',
         'path': '/users',
         'port': 8010,
+        'search-level': 3,
         'default-pages': [
             'index.html',
             'index.htm',
@@ -20,3 +24,5 @@ module.exports = {
         ]
     }
 }
+
+module.exports = _config

@@ -8,6 +8,9 @@ const path = require('path')
 const Filehound = require('filehound')
 const Stopwatch = require("node-stopwatch").Stopwatch
 
+const util = require('./util')
+const config = util.getConfig()
+
 const isDirectory = source => lstatSync(source).isDirectory()
 // const getDirectories = source =>
 //   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
@@ -47,9 +50,10 @@ let _scan = function (queryPath, resolve, reject) {
             dirs.forEach(dir => {
                 let _path = path.resolve(__dirname, dir)
                 //console.log(`_path : ${_path}`)
-                let currentPath = path.join(_path, 'www')
+                // let currentPath = path.join(_path, 'www')
 
-                if (currentLevel > 0) currentPath = _path
+                // if (currentLevel > 0) currentPath = _path
+                let currentPath = dir
 
                 console.log(`current Path : ${currentPath}`)
 
@@ -63,8 +67,7 @@ let _scan = function (queryPath, resolve, reject) {
 
                     // check is root has default-pages that defined in config.js
                     // >> /thchang/www
-                    let _config = require('./config')[process.env.NODE_ENV]
-                    let defaultPages = _config['default-pages'] || []
+                    let defaultPages = config['default-pages'] || []
 
                     let defaultExists = false
 
@@ -95,7 +98,7 @@ let _scan = function (queryPath, resolve, reject) {
             })
         }
 
-        searchDirectories(queryPath, 3, 0) // 2 is the max level deep in search
+        searchDirectories(queryPath, config['search-level'], 0) // 2 is the max level deep in search
 
         resolve(outputs)
     } catch (ex) {

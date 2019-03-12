@@ -4,13 +4,17 @@ require('colors')
 
 const ps = require('ps-node')
 const psaux = require('psaux')
+const chokidar = require('chokidar')
 const {
     nextAvailable
 } = require('node-port-check')
 const {
     exec
 } = require('child_process')
+
 const server = require('./express-service')
+const util = require('./util')
+const config = util.getConfig()
 
 const max_try_times = 3
 
@@ -65,7 +69,53 @@ try {
         }, 1000)
     }
 
-    runPsCheck()
+    let countdownStarted = false;
+    let totalLessSecondMax = 5;
+    let totalLessSeconds = 0;
+
+    let startCountdown = () => {
+        totalLessSeconds = totalLessSecondMax;
+        countdownStarted = true
+
+        let _loop = () => {
+            setTimeout(() => {
+                console.log(`totalLessSeconds = ${totalLessSeconds}`)
+                totalLessSeconds -= 1
+                if (totalLessSeconds <= 0) {
+                    console.log('Countdown over')
+                    countdownStarted = false
+                    return
+                }
+
+                _loop()
+            }, 1000)
+        }
+
+        _loop()
+    }
+
+    //runPsCheck()
+    server.run(true)
+        .then(() => {
+            startCountdown();
+
+            chokidar.watch(config.path, {
+                //ignored: /(^|[\/\\])\../
+            }).on('all', (event, path) => {
+                if (countdownStarted && totalLessSeconds < totalLessSecondMax) {
+                    totalLessSeconds += 1
+                }
+
+                if (countdownStarted) return
+                
+                //console.log(event, path)
+                process.exit()
+            }).on('error', error => {
+                console.error(error)
+            })
+            
+            console.log('watch !!!!!!!')
+        });
 
 } catch (ex) {
     console.log(ex)
