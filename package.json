@@ -21,7 +21,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "_start": "cross-env NODE_ENV=production node server.js",
+    "start": "cross-env NODE_ENV=production forever server.js"
   },
   "author": "",
   "license": "ISC"

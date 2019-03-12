@@ -13,6 +13,8 @@ USER node
 
 RUN npm install
 
+RUN npm install forever -g
+
 COPY . .
 
 USER root
