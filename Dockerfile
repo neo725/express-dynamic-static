@@ -25,6 +25,7 @@ EXPOSE 8010
 
 #CMD ["node", "server.js"]
 
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
 #CMD ["cross-env", "NODE_ENV=production"]
 #CMD ["forever", "start", "server.js"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js", "--env", "production"]
