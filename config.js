@@ -12,9 +12,9 @@ var _config = {
         ]
     },
     'production': {
-        'host': 'http://edls',
+        'host': 'http://edlc',
         'path': '/users',
-        'port': 8010,
+        'port': 3000,
         'search-level': 3,
         'default-pages': [
             'index.html',

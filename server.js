@@ -100,6 +100,7 @@ try {
             startCountdown();
 
             chokidar.watch(config.path, {
+                depth: 3
                 //ignored: /(^|[\/\\])\../
             }).on('all', (event, path) => {
                 if (countdownStarted && totalLessSeconds < totalLessSecondMax) {
