@@ -96,24 +96,35 @@ try {
 
     //runPsCheck()
     server.run(true)
-        .then(() => {
+        .then((pool) => {
             startCountdown();
 
-            chokidar.watch(config.path, {
-                depth: 3
-                //ignored: /(^|[\/\\])\../
-            }).on('all', (event, path) => {
-                if (countdownStarted && totalLessSeconds < totalLessSecondMax) {
-                    totalLessSeconds += 1
-                }
-
-                if (countdownStarted) return
-                
-                //console.log(event, path)
-                process.exit()
-            }).on('error', error => {
-                console.error(error)
-            })
+            if (pool && pool.length) {
+                pool.forEach((p) => {
+                    try {
+                        //chokidar.watch(config.path, {
+                        chokidar.watch(p.path, {
+                            depth: 3
+                            //ignored: /(^|[\/\\])\../
+                        }).on('all', (event, path) => {
+                            if (countdownStarted && totalLessSeconds < totalLessSecondMax) {
+                                totalLessSeconds += 1
+                            }
+            
+                            if (countdownStarted) return
+                            
+                            console.log(event, path)
+                            process.exit()
+                        }).on('error', error => {
+                            console.error(error)
+                        })
+                    }
+                    catch (ex) {
+                        console.log(`watch ${p.key}:'${p.path}' error :`)
+                        console.error(ex)
+                    }
+                })
+            }
             
             console.log('watch !!!!!!!')
         });

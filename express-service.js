@@ -101,7 +101,7 @@ let _run = (initialScan) => {
                             })
                         }
 
-                        resolve()
+                        resolve(pool)
                     })
                     .catch(ex => {
                         console.error(ex)
